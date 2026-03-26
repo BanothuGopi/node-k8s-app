@@ -27,7 +27,10 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push laxmi916/my-k8s-app:latest'
+              script {
+                    withDockerRegistry(credentialsId: 'dockerhub-creds', url: '') {
+                        sh 'docker push mohammadsameer9271/my-k8s-app:latest'
+                    }
             }
         }
     }
