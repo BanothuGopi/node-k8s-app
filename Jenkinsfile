@@ -1,16 +1,12 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = "gopi955/my-k8s-app:latest"
-    }
-
     stages {
 
         stage('Checkout from GitHub') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/BanothuGopi/node-k8s-app.git'
+                    url: 'https://github.com/BanothuGopi/node-k8s-app1.git'
             }
         }
 
@@ -23,18 +19,18 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                docker build -t my-k8s-app:${BUILD_NUMBER} .
-                docker tag my-k8s-app:${BUILD_NUMBER} gopi955/my-k8s-app:latest
+                docker build -t my-k8s-app1:${BUILD_NUMBER} .
+                docker tag my-k8s-app1:${BUILD_NUMBER} gopi955/my-k8s-app1:${BUILD_NUMBER}
                 '''
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                script {
-                    withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
-                        sh "docker push ${DOCKER_IMAGE}"
-                    }
+                withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
+                    sh '''
+                    docker push gopi955/my-k8s-app1:${BUILD_NUMBER}
+                    '''
                 }
             }
         }
