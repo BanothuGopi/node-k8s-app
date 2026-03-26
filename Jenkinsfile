@@ -29,7 +29,7 @@ pipeline {
             steps {
               script {
                     withDockerRegistry(credentialsId: 'dockerhub-creds', url: '') {
-                        sh 'docker push mohammadsameer9271/my-k8s-app:latest'
+                        sh 'docker push gopi955/my-k8s-app:latest'
                     }
             }
         }
