@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = "gopi955/my-k8s-app:latest"
+    }
+
     stages {
 
         stage('Checkout from GitHub') {
@@ -27,12 +31,12 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-              script {
-                    withDockerRegistry([credentialsId: 'dockerhub-creds', url: '']) {
-                    sh "docker push ${DOCKER_IMAGE}"
+                script {
+                    withDockerRegistry([credentialsId: 'dockerhub-creds', url: 'https://index.docker.io/v1/']) {
+                        sh "docker push ${DOCKER_IMAGE}"
                     }
+                }
             }
         }
     }
-}
 }
