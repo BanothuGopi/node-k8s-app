@@ -28,8 +28,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
               script {
-                    withDockerRegistry(credentialsId: 'dockerhub-creds', url: '') {
-                        sh 'docker push gopi955/my-k8s-app:latest'
+                    withDockerRegistry([credentialsId: 'dockerhub-creds', url: '']) {
+                    sh "docker push ${DOCKER_IMAGE}"
                     }
             }
         }
